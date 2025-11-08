@@ -229,7 +229,7 @@ impl EasyTierLauncher {
             });
 
             let notifier = data.instance_stop_notifier.clone();
-            let mut instance = Instance::new(cfg);
+            let instance = Instance::new(cfg);
             
             #[cfg(feature = "socks5")]
             let _ = sender.send(instance.socks5_server.clone());
@@ -411,7 +411,7 @@ impl NetworkInstance {
 
     pub fn start(&mut self) -> Result<(EventBusSubscriber, Option<Arc<Socks5Server>>), anyhow::Error> {
         if self.is_easytier_running() {
-            return Ok(self.subscribe_event().unwrap());
+            return Ok((self.subscribe_event().unwrap(), None));
         }
 
         let launcher = EasyTierLauncher::new();
