@@ -409,7 +409,7 @@ impl NetworkInstance {
         }
     }
 
-    pub fn start(&mut self) -> Result<(EventBusSubscriber, Socks5Server), anyhow::Error> {
+    pub fn start(&mut self) -> Result<(EventBusSubscriber, Option<Arc<Socks5Server>>), anyhow::Error> {
         if self.is_easytier_running() {
             return Ok(self.subscribe_event().unwrap());
         }
