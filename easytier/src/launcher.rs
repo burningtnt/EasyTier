@@ -409,6 +409,10 @@ impl NetworkInstance {
         }
     }
 
+    pub fn get_tun_fd_setting(&mut self) -> Option<Arc<RwLock<Option<i32>>>> {
+        self.launcher.as_ref().map(|launcher| launcher.data.tun_fd.clone())
+    }
+
     pub fn start(&mut self) -> Result<(EventBusSubscriber, Option<Arc<Socks5Server>>), anyhow::Error> {
         if self.is_easytier_running() {
             return Ok((self.subscribe_event().unwrap(), None));
