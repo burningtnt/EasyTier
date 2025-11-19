@@ -33,11 +33,12 @@ pub struct Event {
     event: GlobalCtxEvent,
 }
 
-struct EasyTierData {
-    events: RwLock<VecDeque<Event>>,
-    tun_fd: Arc<RwLock<Option<i32>>>,
-    event_subscriber: RwLock<broadcast::Sender<GlobalCtxEvent>>,
-    instance_stop_notifier: Arc<tokio::sync::Notify>,
+// Terracotta Changes: Make fields accessible from external codes
+pub struct EasyTierData {
+    pub events: RwLock<VecDeque<Event>>,
+    pub tun_fd: Arc<RwLock<Option<i32>>>,
+    pub event_subscriber: RwLock<broadcast::Sender<GlobalCtxEvent>>,
+    pub instance_stop_notifier: Arc<tokio::sync::Notify>,
 }
 
 impl Default for EasyTierData {
@@ -52,14 +53,15 @@ impl Default for EasyTierData {
     }
 }
 
+// Terracotta Changes: Make fields accessible from external codes
 pub struct EasyTierLauncher {
-    instance_alive: Arc<AtomicBool>,
-    stop_flag: Arc<AtomicBool>,
-    thread_handle: Option<std::thread::JoinHandle<()>>,
-    api_service: ArcMutApiService,
-    running_cfg: String,
-    error_msg: Arc<RwLock<Option<String>>>,
-    data: Arc<EasyTierData>,
+    pub instance_alive: Arc<AtomicBool>,
+    pub stop_flag: Arc<AtomicBool>,
+    pub thread_handle: Option<std::thread::JoinHandle<()>>,
+    pub api_service: ArcMutApiService,
+    pub running_cfg: String,
+    pub error_msg: Arc<RwLock<Option<String>>>,
+    pub data: Arc<EasyTierData>,
 }
 
 impl EasyTierLauncher {
@@ -281,10 +283,11 @@ impl Drop for EasyTierLauncher {
 
 pub type NetworkInstanceRunningInfo = crate::proto::api::manage::NetworkInstanceRunningInfo;
 
+// Terracotta Changes: Make fields accessible from external codes
 pub struct NetworkInstance {
-    config: TomlConfigLoader,
-    launcher: Option<EasyTierLauncher>,
-    config_file_control: ConfigFileControl,
+    pub config: TomlConfigLoader,
+    pub launcher: Option<EasyTierLauncher>,
+    pub config_file_control: ConfigFileControl,
 }
 
 impl NetworkInstance {
